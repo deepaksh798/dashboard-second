@@ -1,8 +1,6 @@
 import React from "react";
 
-type Props = {};
-
-const Page = (props: Props) => {
+const Page = () => {
   return (
     <div>
       <div className="font-semibold text-xl text-center">

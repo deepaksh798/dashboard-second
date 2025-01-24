@@ -34,7 +34,7 @@ const Assistants = () => {
     dispatch(fetchData());
   }, [dispatch]);
 
-  console.log("assistent --> ", cardData);
+  // console.log("assistent --> ", cardData);
 
   const handleCreateAssistant = (newAssistant: any) => {
     setCardData((prev) => [...prev, newAssistant]);
