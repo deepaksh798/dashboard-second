@@ -28,125 +28,124 @@ const SideNavBar = () => {
   return (
     <>
       {/* Sidebar */}
-      <aside
-        className={
-          "h-full bg-[#0B3229] text-white transform w-[290px] px-2 select-none flex flex-col justify-between"
-        }
-      >
+      <aside className="h-screen bg-[#0B3229] text-white relative w-[290px] px-2 select-none flex flex-col justify-between">
         <div>
-          <div className="p-5 font-bold text-lg ">
+          <div className="p-5 font-bold text-lg">
             <Image src="/Logo.svg" alt="" height={30} width={160} />
           </div>
 
-          <nav className="mt-4 text-[16px]">
-            <ul className="text-black">
-              <Link href="">
-                <li
-                  className={`text-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg cursor-not-allowed ${
-                    isActive("/home") ? "bg-[#EAEBFF]" : ""
-                  }`}
-                >
-                  <FiHome className="h-[18px] w-[18px]" />
-                  Overview
-                </li>
-              </Link>
-              <Link href="">
-                <li
-                  className={`text-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg cursor-not-allowed ${
-                    isActive("/user-management") ? "bg-[#EAEBFF]" : ""
-                  }`}
-                >
-                  <FiHeadphones className="h-[18px] w-[18px]" />
-                  Phone
-                </li>
-              </Link>
-              <Link href="/assistants">
-                <li
-                  className={`text-[#666666] border border-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg ${
-                    isActive("/assistants")
-                      ? "bg-[#F0FBF1]"
-                      : "hover:bg-[#EAEBFF]"
-                  }`}
-                >
-                  <RiRobot2Line className="h-[18px] w-[18px]" />
-                  Assistants
-                </li>
-              </Link>
-              <Link href="">
-                <li
-                  className={`text-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg cursor-not-allowed ${
-                    isActive("/payment") ? "bg-[#EAEBFF]" : ""
-                  }`}
-                >
-                  <FiHash className="h-[18px] w-[18px]" />
-                  Numbers
-                </li>
-              </Link>
-              <Link href="">
-                <li
-                  className={`text-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg cursor-not-allowed${
-                    isActive("/report") ? "bg-[#EAEBFF]" : ""
-                  }`}
-                >
-                  <IoLogoStackoverflow className="h-[18px] w-[18px]" />
-                  Flows
-                </li>
-              </Link>
-              <Link href="">
-                <li
-                  className={`text-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg cursor-not-allowed${
-                    isActive("/setting") ? "bg-[#EAEBFF]" : ""
-                  }`}
-                >
-                  <FiPhoneCall className="h-[18px] w-[18px]" />
-                  Calls
-                </li>
-              </Link>
+          {/* Scrollable Navigation */}
+          <div className="overflow-y-auto max-h-[calc(100vh-170px)] no-scrollbar">
+            <nav className="mt-4 text-[16px]">
+              <ul className="text-black">
+                <Link href="">
+                  <li
+                    className={`text-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg cursor-not-allowed ${
+                      isActive("/home") ? "bg-[#EAEBFF]" : ""
+                    }`}
+                  >
+                    <FiHome className="h-[18px] w-[18px]" />
+                    <span className="hidden lg:block">Overview</span>
+                  </li>
+                </Link>
+                <Link href="">
+                  <li
+                    className={`text-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg cursor-not-allowed ${
+                      isActive("/user-management") ? "bg-[#EAEBFF]" : ""
+                    }`}
+                  >
+                    <FiHeadphones className="h-[18px] w-[18px]" />
+                    <span className="hidden lg:block">Phone</span>
+                  </li>
+                </Link>
+                <Link href="/assistants">
+                  <li
+                    className={`text-[#666666] border border-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg ${
+                      isActive("/assistants")
+                        ? "bg-[#F0FBF1]"
+                        : "hover:bg-[#EAEBFF]"
+                    }`}
+                  >
+                    <RiRobot2Line className="h-[18px] w-[18px]" />
+                    <span className="hidden lg:block">Assistants</span>
+                  </li>
+                </Link>
+                <Link href="">
+                  <li
+                    className={`text-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg cursor-not-allowed ${
+                      isActive("/payment") ? "bg-[#EAEBFF]" : ""
+                    }`}
+                  >
+                    <FiHash className="h-[18px] w-[18px]" />
+                    <span className="hidden lg:block">Numbers</span>
+                  </li>
+                </Link>
+                <Link href="">
+                  <li
+                    className={`text-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg cursor-not-allowed ${
+                      isActive("/report") ? "bg-[#EAEBFF]" : ""
+                    }`}
+                  >
+                    <IoLogoStackoverflow className="h-[18px] w-[18px]" />
+                    <span className="hidden lg:block">Flows</span>
+                  </li>
+                </Link>
+                <Link href="">
+                  <li
+                    className={`text-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg cursor-not-allowed ${
+                      isActive("/setting") ? "bg-[#EAEBFF]" : ""
+                    }`}
+                  >
+                    <FiPhoneCall className="h-[18px] w-[18px]" />
+                    <span className="hidden lg:block">Calls</span>
+                  </li>
+                </Link>
 
-              <Link href="/calendar">
-                <li
-                  className={`text-[#666666] border border-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg ${
-                    isActive("/calendar")
-                      ? "bg-[#F0FBF1]"
-                      : "hover:bg-[#EAEBFF]"
-                  }`}
-                >
-                  <FaRegCalendarCheck className="h-[18px] w-[18px]" />
-                  Calendar
-                </li>
-              </Link>
-              <Link href="">
-                <li
-                  className={`text-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg cursor-not-allowed ${
-                    isActive("/setting") ? "bg-[#EAEBFF]" : ""
-                  }`}
-                >
-                  <SlCallOut className="h-[18px] w-[18px]" />
-                  Integrations
-                </li>
-              </Link>
-              <Link href="">
-                <li
-                  className={`text-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg cursor-not-allowed ${
-                    isActive("/setting") ? "bg-[#EAEBFF]" : ""
-                  }`}
-                >
-                  <LuUsers className="h-[18px] w-[18px]" />
-                  Users
-                </li>
-              </Link>
-              <Link href="">
-                <li
-                  className={`text-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg cursor-not-allowed ${
-                    isActive("/setting") ? "bg-[#EAEBFF]" : ""
-                  }`}
-                >
-                  <RiSettings3Line className="h-[18px] w-[18px]" />
-                  Settings
-                </li>
-              </Link>
-            </ul>
-          </nav>
+                <Link href="/calendar">
+                  <li
+                    className={`text-[#666666] border border-[#666666] p-2 m-4 flex items-center lg:gap-2 rounded-lg ${
+                      isActive("/calendar")
+                        ? "bg-[#F0FBF1]"
+                        : "hover:bg-[#EAEBFF]"
+                    }`}
+                  >
+                    <FaRegCalendarCheck className="h-[18px] w-[18px]" />
+                    <span className="hidden lg:block">Calendar</span>
+                  </li>
+                </Link>
+                <Link href="">
+                  <li
+                    className={`text-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg cursor-not-allowed ${
+                      isActive("/setting") ? "bg-[#EAEBFF]" : ""
+                    }`}
+                  >
+                    <SlCallOut className="h-[18px] w-[18px]" />
+                    <span className="hidden lg:block">Integrations</span>
+                  </li>
+                </Link>
+                <Link href="">
+                  <li
+                    className={`text-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg cursor-not-allowed ${
+                      isActive("/setting") ? "bg-[#EAEBFF]" : ""
+                    }`}
+                  >
+                    <LuUsers className="h-[18px] w-[18px]" />
+                    <span className="hidden lg:block">Users</span>
+                  </li>
+                </Link>
+                <Link href="">
+                  <li
+                    className={`text-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg cursor-not-allowed ${
+                      isActive("/setting") ? "bg-[#EAEBFF]" : ""
+                    }`}
+                  >
+                    <RiSettings3Line className="h-[18px] w-[18px]" />
+                    <span className="hidden lg:block">Settings</span>
+                  </li>
+                </Link>
+              </ul>
+            </nav>
+          </div>
         </div>
         <div>
           <Button className="w-full mb-8 bg-[#214F45] hover:bg-[#236b5b] text-white font-semibold text-base h-12">

@@ -23,7 +23,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
   }, [pathname, router]);
 
   return (
-    <div className="h-screen flex bg-[#F0FBF1] select-none">
+    <div className="h-screen flex bg-[#F0FBF1] select-none overflow-hidden">
       <SideNavBar />
       <div className="flex-1 flex flex-col">
         <div className="bg-white">

@@ -63,7 +63,7 @@ const Assistants = () => {
             </Button>
           </div>
           <div className="flex flex-wrap gap-6">
-            {data.map((assistant, index) => (
+            {cardData.map((assistant, index) => (
               <div
                 key={index}
                 className="w-[260px] h-auto border border-[#0B322926] p-5 space-y-9 rounded-lg"

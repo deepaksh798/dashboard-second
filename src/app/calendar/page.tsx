@@ -1,19 +1,66 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import AIAssistant from "@/components/AIAssistant";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import { useAppDispatch, useAppSelector } from "@/lib/Redux/Hook/hook";
+import AppointmentPopup from "@/components/AppointmentPopup";
+import { fetchUserData } from "@/lib/Redux/Slice/vapiDataSlice";
+import { Button } from "@/components/ui/button";
 
-export default function Calendar() {
-  const events = [{ title: "Meeting", start: new Date() }];
+export default function Contact() {
+  const [openCallAssistant, setOpenCallAssistant] = useState(false);
+  const [events, setEvents] = useState<{ title: string; start: Date }[]>([]);
+  const [openDialogBox, setOpenDialogBox] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+
+  // Select userDetails from Redux
+  const userDetails = useAppSelector(
+    (state) => state.vapiCustomerData.userDetails
+  );
+
+  // handle Fetch User data
+  const handleFetchUserData = () => {
+    dispatch(fetchUserData());
+  };
+
+  // Update events when userDetails changes
+  useEffect(() => {
+    if (userDetails?.dateAndTime) {
+      setEvents([
+        { title: "Appointment", start: new Date(userDetails.dateAndTime) },
+      ]);
+      setOpenDialogBox(true);
+    }
+  }, [userDetails]);
 
   return (
-    <div className="pt-5 px-2">
-      <FullCalendar
-        plugins={[dayGridPlugin]}
-        initialView="dayGridMonth"
-        events={events}
-        // Optionally, you can set some additional FullCalendar options here
-        dayCellClassNames={() => "bg-red-400"} // Example Tailwind class for day cells
+    <div className="text-black flex h-full">
+      <div className="w-full p-8 h-full no-scrollbar">
+        <FullCalendar
+          plugins={[timeGridPlugin, dayGridPlugin]}
+          initialView="dayGridMonth"
+          events={events}
+          headerToolbar={{
+            left: "prev,next today",
+            center: "title",
+            right: "dayGridMonth,timeGridWeek,timeGridDay",
+          }}
+        />
+        {/* <Button onClick={handleFetchUserData}>Click</Button> */}
+      </div>
+      <div className="w-auto h-full">
+        <AIAssistant
+          handleOpenCallAssistant={() =>
+            setOpenCallAssistant(!openCallAssistant)
+          }
+          handleFetchUserData={handleFetchUserData}
+        />
+      </div>
+      <AppointmentPopup
+        open={openDialogBox}
+        onClose={() => setOpenDialogBox(false)}
       />
     </div>
   );

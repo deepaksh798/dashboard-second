@@ -149,7 +149,7 @@ body {
 
 /* Customize events with rounded corners and padding */
 .fc-event {
-  background-color: #0B3229 !important;
+  background-color: #14755f !important;
   color: white ;
   border-radius: 10px;
   padding: 2px 5px;
@@ -164,6 +164,6 @@ body {
 
 /* Highlight today’s date with a custom background */
 .fc-day-today {
-  background-color: #0B3229 !important;
+  background-color: #14755f !important;
   border-radius: 10px ;
 }
