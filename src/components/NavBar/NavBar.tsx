@@ -46,9 +46,9 @@ const NavBar = () => {
         />
       </div>
       <div className="flex gap-8">
-        <div className="max-w-[178px] h-full">
+        {/* <div className="max-w-[178px] h-full">
           <Button className="h-full">Create Campaign</Button>
-        </div>
+        </div> */}
         <div className="flex items-center">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

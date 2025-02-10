@@ -14,6 +14,7 @@ export const fetchUserData = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await fetch("/api/");
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }

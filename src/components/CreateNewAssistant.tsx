@@ -17,10 +17,11 @@ import {
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useAppDispatch } from "@/lib/Redux/Hook/hook";
-import { createAssistant } from "@/lib/Redux/Slice/cardDataSlice";
+import { createAssistant } from "@/lib/Redux/Slice/userDataSlice";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 type Props = {
-  onSubmit: (assistant: any) => void;
+  onSubmit: () => void;
   onCancel: () => void;
 };
 
@@ -34,8 +35,9 @@ const CreateNewAssistant = ({ onSubmit, onCancel }: Props) => {
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setImagePreview(reader.result as string);
-        formik.setFieldValue("image", file);
+        const base64Image = reader.result as string;
+        setImagePreview(base64Image);
+        formik.setFieldValue("image", base64Image); // Store Base64 in Formik state
       };
       reader.readAsDataURL(file);
     }
@@ -54,8 +56,9 @@ const CreateNewAssistant = ({ onSubmit, onCancel }: Props) => {
     },
     validationSchema: assistantSchema,
     onSubmit: (values) => {
-      console.log("Form Data:", values);
+      // console.log("Form Data:", values);
       const assistentData = {
+        image: values.image,
         name: values.name,
         your_agent: values.yourAgent,
         description: values.knowledgeBase,
@@ -67,6 +70,7 @@ const CreateNewAssistant = ({ onSubmit, onCancel }: Props) => {
       console.log("data assistentData", assistentData);
       dispatch(createAssistant(assistentData));
       // onSubmit(values);
+      onSubmit();
       formik.resetForm;
     },
   });
@@ -125,14 +129,20 @@ const CreateNewAssistant = ({ onSubmit, onCancel }: Props) => {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="flex gap-14 lg:gap-32 w-full justify-center"
+      className="flex flex-col h-full w-full pt-7 px-7 bg-[#F0FBF1]"
     >
-      <div className="max-w-7xl">
+      <div className="flex justify-between max-w-7xl">
         <h1 className="text-2xl font-semibold flex items-center gap-1 mb-9">
           <FaAngleLeft onClick={onCancel} className="cursor-pointer" />
           Create New Assistant
         </h1>
-        <div className="space-y-6">
+        <Button type="submit" className="font-semibold rounded-md gap-2">
+          Save
+          <Icon icon="material-symbols:save-rounded" width="24" height="24" />
+        </Button>
+      </div>
+      <div className="w-full h-full rounded-md bg-white pt-10 px-24 ">
+        <div className="max-w-7xl space-y-6 pb-8">
           {/* Image and Text Inputs */}
           <div className="flex items-center space-x-4">
             <div className="relative">
@@ -202,13 +212,16 @@ const CreateNewAssistant = ({ onSubmit, onCancel }: Props) => {
           </div>
 
           {/* Knowledge Base */}
-          <textarea
-            name="knowledgeBase"
-            placeholder="Write your knowledge base here"
-            onChange={formik.handleChange}
-            value={formik.values.knowledgeBase}
-            className="w-full border border-gray-300 rounded-md p-2 h-36"
-          ></textarea>
+          <div className="space-y-4">
+            <Label className="font-medium text-[16px]">Description</Label>
+            <textarea
+              name="knowledgeBase"
+              placeholder="Write your knowledge base here"
+              onChange={formik.handleChange}
+              value={formik.values.knowledgeBase}
+              className="w-full border border-gray-300 rounded-md p-2 h-36"
+            ></textarea>
+          </div>
 
           {/* Language Selection */}
           <div className="space-y-4">
@@ -304,15 +317,7 @@ const CreateNewAssistant = ({ onSubmit, onCancel }: Props) => {
           {/* Save Button */}
         </div>
       </div>
-      <div className="text-right">
-        <Button
-          type="submit"
-          className="h-12 w-40 font-semibold rounded-md gap-2"
-        >
-          Save
-          <TiArrowRight className="h-6 w-6" />
-        </Button>
-      </div>
+      <div className="text-right"></div>
     </form>
   );
 };

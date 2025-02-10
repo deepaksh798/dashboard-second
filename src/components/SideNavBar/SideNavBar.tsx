@@ -2,18 +2,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
-import { FiHome } from "react-icons/fi";
-import { FiPhoneCall } from "react-icons/fi";
-import { RiRobot2Line } from "react-icons/ri";
-import { FiHash } from "react-icons/fi";
-import { FiHeadphones } from "react-icons/fi";
-import { FaRegCalendarCheck } from "react-icons/fa";
-import { SlCallOut } from "react-icons/sl";
-import { LuUsers } from "react-icons/lu";
-import { RiSettings3Line } from "react-icons/ri";
 import { MdLogout } from "react-icons/md";
-import { IoLogoStackoverflow } from "react-icons/io5";
-
 import { usePathname } from "next/navigation";
 import { Button } from "../ui/button";
 
@@ -44,40 +33,53 @@ const SideNavBar = () => {
                       isActive("/home") ? "bg-[#EAEBFF]" : ""
                     }`}
                   >
-                    <FiHome className="h-[18px] w-[18px]" />
-                    <span className="hidden lg:block">Overview</span>
+                    <Icon
+                      icon="material-symbols:dashboard-rounded"
+                      width="24"
+                      height="24"
+                    />
+                    <span className="hidden lg:block">Home</span>
                   </li>
                 </Link>
+                {/*  */}
+
+                <Link href="/assistants">
+                  <li
+                    className={`text-[#0B3229] border border-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg ${
+                      isActive("/assistants")
+                        ? "bg-[#F0FBF1]"
+                        : "hover:bg-[#EAEBFF]"
+                    }`}
+                  >
+                    <Icon icon="lucide:bot" width="24" height="24" />
+                    <span className="hidden lg:block">AI Assistants</span>
+                  </li>
+                </Link>
+
+                {/*  */}
                 <Link href="">
                   <li
                     className={`text-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg cursor-not-allowed ${
                       isActive("/user-management") ? "bg-[#EAEBFF]" : ""
                     }`}
                   >
-                    <FiHeadphones className="h-[18px] w-[18px]" />
-                    <span className="hidden lg:block">Phone</span>
+                    <Icon icon="ic:round-contact-page" width="24" height="24" />
+                    <span className="hidden lg:block">Numbers</span>
                   </li>
                 </Link>
-                <Link href="/assistants">
-                  <li
-                    className={`text-[#666666] border border-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg ${
-                      isActive("/assistants")
-                        ? "bg-[#F0FBF1]"
-                        : "hover:bg-[#EAEBFF]"
-                    }`}
-                  >
-                    <RiRobot2Line className="h-[18px] w-[18px]" />
-                    <span className="hidden lg:block">Assistants</span>
-                  </li>
-                </Link>
+
                 <Link href="">
                   <li
                     className={`text-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg cursor-not-allowed ${
                       isActive("/payment") ? "bg-[#EAEBFF]" : ""
                     }`}
                   >
-                    <FiHash className="h-[18px] w-[18px]" />
-                    <span className="hidden lg:block">Numbers</span>
+                    <Icon
+                      icon="material-symbols-light:flowchart-sharp"
+                      width="24"
+                      height="24"
+                    />
+                    <span className="hidden lg:block">Campaigns</span>
                   </li>
                 </Link>
                 <Link href="">
@@ -86,8 +88,12 @@ const SideNavBar = () => {
                       isActive("/report") ? "bg-[#EAEBFF]" : ""
                     }`}
                   >
-                    <IoLogoStackoverflow className="h-[18px] w-[18px]" />
-                    <span className="hidden lg:block">Flows</span>
+                    <Icon
+                      icon="mingcute:phone-call-fill"
+                      width="24"
+                      height="24"
+                    />
+                    <span className="hidden lg:block">Contacts</span>
                   </li>
                 </Link>
                 <Link href="">
@@ -96,12 +102,23 @@ const SideNavBar = () => {
                       isActive("/setting") ? "bg-[#EAEBFF]" : ""
                     }`}
                   >
-                    <FiPhoneCall className="h-[18px] w-[18px]" />
-                    <span className="hidden lg:block">Calls</span>
+                    <Icon icon="mage:users-fill" width="24" height="24" />
+                    <span className="hidden lg:block">Reports</span>
                   </li>
                 </Link>
+                <Link href="">
+                  <li
+                    className={`text-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg cursor-not-allowed ${
+                      isActive("/setting") ? "bg-[#EAEBFF]" : ""
+                    }`}
+                  >
+                    <Icon icon="weui:setting-filled" width="24" height="24" />
+                    <span className="hidden lg:block">Settings</span>
+                  </li>
+                </Link>
+                {/* --- */}
 
-                <Link href="/calendar">
+                {/* <Link href="/calendar">
                   <li
                     className={`text-[#666666] border border-[#666666] p-2 m-4 flex items-center lg:gap-2 rounded-lg ${
                       isActive("/calendar")
@@ -109,8 +126,8 @@ const SideNavBar = () => {
                         : "hover:bg-[#EAEBFF]"
                     }`}
                   >
-                    <FaRegCalendarCheck className="h-[18px] w-[18px]" />
-                    <span className="hidden lg:block">Calendar</span>
+                    <Icon icon="uis:calender" width="24" height="24" />
+                    <span className="hidden lg:block">Calender</span>
                   </li>
                 </Link>
                 <Link href="">
@@ -119,7 +136,11 @@ const SideNavBar = () => {
                       isActive("/setting") ? "bg-[#EAEBFF]" : ""
                     }`}
                   >
-                    <SlCallOut className="h-[18px] w-[18px]" />
+                    <Icon
+                      icon="material-symbols:integration-instructions"
+                      width="24"
+                      height="24"
+                    />
                     <span className="hidden lg:block">Integrations</span>
                   </li>
                 </Link>
@@ -129,20 +150,10 @@ const SideNavBar = () => {
                       isActive("/setting") ? "bg-[#EAEBFF]" : ""
                     }`}
                   >
-                    <LuUsers className="h-[18px] w-[18px]" />
+                    <Icon icon="mage:users-fill" width="24" height="24" />
                     <span className="hidden lg:block">Users</span>
                   </li>
-                </Link>
-                <Link href="">
-                  <li
-                    className={`text-[#666666] p-2 m-4 flex items-center gap-2 rounded-lg cursor-not-allowed ${
-                      isActive("/setting") ? "bg-[#EAEBFF]" : ""
-                    }`}
-                  >
-                    <RiSettings3Line className="h-[18px] w-[18px]" />
-                    <span className="hidden lg:block">Settings</span>
-                  </li>
-                </Link>
+                </Link> */}
               </ul>
             </nav>
           </div>
