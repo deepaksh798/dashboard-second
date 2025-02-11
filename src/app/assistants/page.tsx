@@ -7,16 +7,38 @@ import { Button } from "@/components/ui/button";
 import { LuPlus } from "react-icons/lu";
 import { Icon } from "@iconify/react";
 import ChatDialog from "@/components/ChatDialog";
-import { useAppSelector } from "@/lib/Redux/Hook/hook";
+import { useAppDispatch, useAppSelector } from "@/lib/Redux/Hook/hook";
+import AppointmentPopup from "@/components/AppointmentPopup";
+import { fetchUserData } from "@/lib/Redux/Slice/vapiDataSlice";
 
 const Assistants = () => {
+  const dispatch = useAppDispatch();
   const assistants = useAppSelector((state) => state.userData.assistants);
 
   const [openForm, setOpenForm] = useState(false);
   const [cardData, setCardData] = useState<any[]>([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [currentAssistant, setCurrentAssistant] = useState<any | null>(null);
+  const [openDialogBox, setOpenDialogBox] = useState<boolean>(false);
 
+  // get data from vapi
+  const userDetails = useAppSelector(
+    (state) => state.vapiCustomerData.userDetails
+  );
+
+  const handleFetchUserData = () => {
+    console.log("handleFetchUserData runing");
+    dispatch(fetchUserData());
+  };
+  console.log("userDetails-->", userDetails);
+
+  useEffect(() => {
+    if (userDetails?.dateAndTime) {
+      setOpenDialogBox(true);
+    }
+  }, [userDetails]);
+
+  // default card data
   const defaultAssistants = [
     {
       image: "",
@@ -131,8 +153,13 @@ const Assistants = () => {
               open={openDialog}
               onClose={() => setOpenDialog(false)}
               assistant={currentAssistant}
+              handleFetchUserData={handleFetchUserData}
             />
           )}
+          <AppointmentPopup
+            open={openDialogBox}
+            onClose={() => setOpenDialogBox(false)}
+          />
         </div>
       )}
     </div>

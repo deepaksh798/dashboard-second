@@ -13,12 +13,14 @@ interface ChatDialogProps {
   open: boolean;
   onClose: () => void;
   assistant: { name: string; id: string };
+  handleFetchUserData: () => void;
 }
 
 const ChatDialog: React.FC<ChatDialogProps> = ({
   open,
   onClose,
   assistant,
+  handleFetchUserData,
 }) => {
   const [callStatus, setCallStatus] = useState("Disconnected");
   const [isSpeaking, setIsSpeaking] = useState(false); // State to control Lottie animation
@@ -46,7 +48,10 @@ const ChatDialog: React.FC<ChatDialogProps> = ({
       vapi.on("speech-end", () => {
         setIsSpeaking(false);
       });
-      vapi.on("call-end", () => setCallStatus("Call Ended"));
+      vapi.on("call-end", () => {
+        setCallStatus("Call Ended");
+        handleFetchUserData();
+      });
       vapi.on("message", (message) => {
         console.log("Received message from VAPI:", message.transcript);
       });
@@ -88,14 +93,15 @@ const ChatDialog: React.FC<ChatDialogProps> = ({
   };
 
   return (
-    <Dialog open={open} onOpenChange={() => handleStopCall()}>
-      <DialogContent className="bg-[#414141] border-none">
+    <Dialog open={open}>
+      <DialogContent className="bg-[#F0FBF1] border-none">
+        <DialogTitle></DialogTitle>
         <div className="flex flex-col items-center gap-4 h-full max-h-[500px]">
           <div className="flex flex-col items-center gap-2">
-            <div className="w-[88px] h-20 bg-[#D7FE66] rounded-xl flex justify-center items-center">
+            <div className="w-[88px] h-20 bg-[#0B3229] text-[#F0FBF1] rounded-xl flex justify-center items-center">
               <Icon icon="solar:user-bold" width="34" height="34" />
             </div>
-            <span className="text-[#D7FE66] font-normal flex items-center gap-2">
+            <span className="text-[#0B3229] font-normal flex gap-2">
               {assistant?.name}
               <Icon icon="mynaui:play-waves-solid" width="24" height="24" />
             </span>
@@ -106,7 +112,7 @@ const ChatDialog: React.FC<ChatDialogProps> = ({
               options={options}
               isStopped={!isSpeaking}
               isPaused={!isSpeaking}
-              height={200}
+              height={110}
               width={200}
             />
           </div>
@@ -126,25 +132,25 @@ const ChatDialog: React.FC<ChatDialogProps> = ({
             {callStatus}
           </div>
           {/* calling options */}
-          <div className="text-white w-full max-w-[278px] h-[60px] bg-[#585858] rounded-full flex items-center justify-evenly">
+          <div className="text-white w-full max-w-[278px] h-[60px] bg-[#0B3229] rounded-full flex items-center justify-evenly">
             <div
-              className="bg-[#E08A00] h-[30px] w-[30px] rounded-full flex justify-center items-center cursor-pointer"
+              className="bg-[#E08A00] h-[40px] w-[40px] rounded-full flex justify-center items-center cursor-pointer"
               onClick={() => handleCallMute()}
             >
               {true ? (
-                <Icon icon="mingcute:volume-fill" width="12" height="12" />
+                <Icon icon="mingcute:volume-fill" width="18" height="18" />
               ) : (
-                <Icon icon="streamline:volume-off" width="12" height="12" />
+                <Icon icon="streamline:volume-off" width="18" height="18" />
               )}
             </div>
             {/* <div className="h-[40px] w-[40px] bg-gradient-to-r from-[#666666] via-[#a5a4a4] to-[#666666] rounded-full flex justify-center items-center cursor-pointer">
               <Icon icon="material-symbols:mic" width="17" height="17" />
             </div> */}
             <div
-              className="bg-[#EB0000] h-[30px] w-[30px] rounded-full flex justify-center items-center cursor-pointer"
+              className="bg-[#EB0000] h-[40px] w-[40px] rounded-full flex justify-center items-center cursor-pointer"
               onClick={handleStopCall}
             >
-              <Icon icon="maki:cross" width="12" height="12" />
+              <Icon icon="maki:cross" width="18" height="18" />
             </div>
           </div>
         </div>
