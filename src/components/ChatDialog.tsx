@@ -25,6 +25,7 @@ const ChatDialog: React.FC<ChatDialogProps> = ({
   const [callStatus, setCallStatus] = useState("Disconnected");
   const [isSpeaking, setIsSpeaking] = useState(false); // State to control Lottie animation
   const [callMute, setCallMute] = useState(true);
+  const [showCallingOptions, setShowCallingOptions] = useState(false);
 
   const dispatch = useAppDispatch();
 
@@ -41,7 +42,10 @@ const ChatDialog: React.FC<ChatDialogProps> = ({
       vapi.start("b091c4fe-079e-479c-83a6-89a3fad5fac4");
       setCallStatus("Connected");
 
-      vapi.on("call-start", () => setCallStatus("Call Started"));
+      vapi.on("call-start", () => {
+        setCallStatus("Call Started");
+        setShowCallingOptions(true);
+      });
       vapi.on("speech-start", () => {
         setIsSpeaking(true);
       });
@@ -51,6 +55,7 @@ const ChatDialog: React.FC<ChatDialogProps> = ({
       vapi.on("call-end", () => {
         setCallStatus("Call Ended");
         handleFetchUserData();
+        setShowCallingOptions(false);
       });
       vapi.on("message", (message) => {
         console.log("Received message from VAPI:", message.transcript);
@@ -114,6 +119,7 @@ const ChatDialog: React.FC<ChatDialogProps> = ({
               isPaused={!isSpeaking}
               height={110}
               width={200}
+              isClickToPauseDisabled={true}
             />
           </div>
           {/* call status */}
@@ -132,27 +138,29 @@ const ChatDialog: React.FC<ChatDialogProps> = ({
             {callStatus}
           </div>
           {/* calling options */}
-          <div className="text-white w-full max-w-[278px] h-[60px] bg-[#0B3229] rounded-full flex items-center justify-evenly">
-            <div
-              className="bg-[#E08A00] h-[40px] w-[40px] rounded-full flex justify-center items-center cursor-pointer"
-              onClick={() => handleCallMute()}
-            >
-              {true ? (
-                <Icon icon="mingcute:volume-fill" width="18" height="18" />
-              ) : (
-                <Icon icon="streamline:volume-off" width="18" height="18" />
-              )}
-            </div>
-            {/* <div className="h-[40px] w-[40px] bg-gradient-to-r from-[#666666] via-[#a5a4a4] to-[#666666] rounded-full flex justify-center items-center cursor-pointer">
+          {showCallingOptions && (
+            <div className="text-white w-full max-w-[278px] h-[60px] bg-[#0B3229] rounded-full flex items-center justify-evenly">
+              <div
+                className="bg-[#E08A00] h-[40px] w-[40px] rounded-full flex justify-center items-center cursor-pointer"
+                onClick={() => handleCallMute()}
+              >
+                {true ? (
+                  <Icon icon="mingcute:volume-fill" width="18" height="18" />
+                ) : (
+                  <Icon icon="streamline:volume-off" width="18" height="18" />
+                )}
+              </div>
+              {/* <div className="h-[40px] w-[40px] bg-gradient-to-r from-[#666666] via-[#a5a4a4] to-[#666666] rounded-full flex justify-center items-center cursor-pointer">
               <Icon icon="material-symbols:mic" width="17" height="17" />
             </div> */}
-            <div
-              className="bg-[#EB0000] h-[40px] w-[40px] rounded-full flex justify-center items-center cursor-pointer"
-              onClick={handleStopCall}
-            >
-              <Icon icon="maki:cross" width="18" height="18" />
+              <div
+                className="bg-[#EB0000] h-[40px] w-[40px] rounded-full flex justify-center items-center cursor-pointer"
+                onClick={handleStopCall}
+              >
+                <Icon icon="maki:cross" width="18" height="18" />
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>
